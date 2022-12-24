@@ -1,7 +1,5 @@
 import random
   
-
-
 def yes_no() -> bool:
     while True:
         answer = input('Y or N?\n').lower()
@@ -28,13 +26,15 @@ def Start():
     global take_candies
     global player_candies
     global bot_candies
+    global ask
     total_candies = int(input('\033[36m{}\033[0m'.format('Введите максимальное количество конфет ')))
     take_candies = 0
     player_candies = 0
     max_candies = int(input('\033[36m{}\033[0m'.format('Максмальное число конфет за одни ход: ')))
     bot_candies = 0
+    ask = None
     print('\033[32m{}\033[0m'.format(f'Конфет лежит: {total_candies} , задача игроков - брать конфеты по очереди, но не более, чем {max_candies} за один ход. Тот, после чьего хода на столе не останется конфет - победит '))
-    ask =bot()
+    ask = bot()
     if ask == False:
         player_1 = input('\033[36m{}\033[0m'.format('Введите имя первого игрока '))
         player_2 = input('\033[36m{}\033[0m'.format('Введите имя второго игрока '))
@@ -50,7 +50,7 @@ def player_turn():
     global take_candies
     global player_candies
     global bot_candies
-    
+    global ask
     print('\033[33m{}\033[0m'.format(f'Ход игрока {player_1}, конфет на столе: {total_candies}'))
     take_candies = int(input('\033[36m{}\033[0m'.format(f'Сколько конфет возьмете? ')))
     while take_candies>(max_candies + 1) or take_candies<1 or take_candies>total_candies:
@@ -59,10 +59,18 @@ def player_turn():
     total_candies-=take_candies
     player_candies+=take_candies
     if total_candies>0:
-        if ask == True : bot_turn()
+        if ask == True : 
+            bot_turn()
         else: player_2_turn()
     else:
         print('\033[32m{}\033[0m'.format(f'Шуршим фантиками. Это победа игрока {player_1}!'))
+        print('\033[36m{}\033[0m'.format('Хотите сыграть еще раз?'))
+        ask = yes_no()
+        if ask == True:
+            Start()
+        else:
+            print('\033[32m{}\033[0m'.format('У нас еще много конфет, возвращайтесь!'))
+
 def player_2_turn():
     global total_candies
     global take_candies
@@ -79,6 +87,13 @@ def player_2_turn():
         player_turn()
     else:
         print('\033[32m{}\033[0m'.format(f'Шуршим фантиками. Это победа игрока {player_2}!'))
+        print('\033[36m{}\033[0m'.format('Хотите сыграть еще раз?'))
+        ask = yes_no()
+        if ask == True:
+            Start()
+        else:
+            print('\033[32m{}\033[0m'.format('У нас еще много конфет, возвращайтесь!'))
+
 def bot_turn():
     global hard_level
     global total_candies
