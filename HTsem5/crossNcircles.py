@@ -39,10 +39,10 @@ def draw_table():
             canvas.create_line(i*step_y,0,i*step_y,size_canvas_y)
 
 
-draw_table()
+
 points = [[-1,-1,-1],[-1,-1,-1],[-1,-1,-1]]
 list_ids = []
-
+draw_table()
 
 class Point:
     def __init__(self,x,y,type):
@@ -90,13 +90,13 @@ def button_press():
     for i in list_ids:
      canvas.delete(i)
     list_ids = []
-    print(list_ids)
     points = [[-1,-1,-1],[-1,-1,-1],[-1,-1,-1]]
+    print(list_ids)
+    
 
 b1 = Button(tk,text='Новая игра',command=button_press())
 b1.pack()
 while app_running:
     if app_running:
-        tk.update_idletasks()
         tk.update()
     time.sleep(0.005)
