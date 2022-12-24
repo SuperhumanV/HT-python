@@ -2,7 +2,6 @@ import random
   
 
 
-
 def yes_no() -> bool:
     while True:
         answer = input('Y or N?\n').lower()
